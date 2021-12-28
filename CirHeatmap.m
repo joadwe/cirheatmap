@@ -220,7 +220,7 @@ end
 
 %% Check for Y Label Font Size
 if  max(strcmp('OuterLabelFontSize', CharInputs)) == 1
-    p.OuterLabelFontSize = args{CharPosition(strcmp('YLabelFontSize', CharInputs))+1};
+    p.OuterLabelFontSize = args{CharPosition(strcmp('OuterLabelFontSize', CharInputs))+1};
     if isnumeric(p.Ylabels) == 1
     else
         error('OuterLabelFontSize must be numeric input')
@@ -231,7 +231,7 @@ end
 
 %% Check for Y Label Font Weight
 if  max(strcmp('OuterLabelFontWeight', CharInputs)) == 1
-    p.OuterLabelFontWeight = args{CharPosition(strcmp('YLabelFontWeight', CharInputs))+1};
+    p.OuterLabelFontWeight = args{CharPosition(strcmp('OuterLabelFontSize', CharInputs))+1};
     switch p.OuterLabelFontWeight
         case {'normal','bold'}
         otherwise

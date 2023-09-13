@@ -5,10 +5,12 @@ function [fig] = CirHeatmap(Data, varargin)
 %   CircHeatmap written by Joshua A. Welsh
 %   Created: 1 June 2018
 %   Last Edit: 13 June 2018
+%   Modified by Reno Filla on 13 September 2023
 %
 % INPUTS:
 %
 %   'CircType' - 'o' full circle,'tq' 3/4 circle, 'half' semi-circle
+%                'compass' for a full circle where North = 0, East = 90, South = 180, West = 270
 %     
 %   'OuterLabels' - follow by 1 x n cell array of strings
 %   'OuterLabelFontSize' - follow by single numeric value
@@ -50,7 +52,7 @@ for jj = 1:Data_L
     Tot_Samples_L(jj) = size(Data{jj},2); % total number of samples
     
 end
-p.CentOffset
+p.CentOffset;
 Sample_Space_E = p.CentOffset; % starting spacer from the middle
 index = 1;
 
@@ -72,6 +74,8 @@ Colors = lines(Data_L); % group label colors
 n = size(Data{1},1);    % number of markers
 
 switch p.CircleType
+    case 'compass'
+        theta = pi*(-1/2-(-(n/2):(1*(n/2)))/(n/2));  % theta coordinates for number of columns
     case 'o'
         theta = pi*(-(n/2):(1*(n/2)))/(n/2);  % theta coordinates for number of columns
     case 'tq'
@@ -126,7 +130,7 @@ for jj = 1:Data_L
     hold on
     
     switch p.CircleType
-        case 'o'
+        case {'o', 'compass'}
         case {'tq', 'half'}
             switch p.ShowGroupLabels
                 case 'on'
@@ -139,7 +143,7 @@ for jj = 1:Data_L
 end
 
 switch p.CircleType
-    case 'o'
+    case {'o', 'compass'}
         c=colorbar('manual');
         c.Position = [0.95 0.78 0.01 0.2];
     case {'tq', 'half'}
@@ -200,9 +204,9 @@ end
 if max(strcmp('CircType', CharInputs)) == 1
     p.CircleType = args{CharPosition(strcmp('CircType', CharInputs))+1};
     switch p.CircleType
-        case {'o','tq','half'}
+        case {'o','compass','tq','half'}
         otherwise
-            error('CircType must be ''o'', ''tq'', or ''half''')
+            error('CircType must be ''o'',''compass'', ''tq'', or ''half''')
     end
 else
     p.CircleType = 'tq';

@@ -17,3 +17,5 @@ end
 Groups = {'Pre', 'During','After'}; % Create labels for each group
 
 [Fig] = CirHeatmap(DataX', 'GroupLabels', Groups,'OuterLabels', Labels, 'CircType', 'half','InnerSpacerSize',0.5);
+
+print(Fig, 'test.png','-dpng')

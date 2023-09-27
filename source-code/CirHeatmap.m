@@ -1,4 +1,4 @@
-function [fig] = CirHeatmap(Data, varargin)
+function [figHandle] = CirHeatmap(Data, varargin)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -89,8 +89,9 @@ end
 
 
 %% Plotting Loop
-hFig = figure(1);
-set(gcf,'units','normalized','outerposition',[0 0 0.5 1])
+figHandle = figure('units','normalized','outerposition',[0 0 0.5 1]);
+ax = axes();
+hold(ax,'on')
 
 for jj = 1:Data_L
     
@@ -107,7 +108,7 @@ for jj = 1:Data_L
     Plot_C = r*cos(2*theta);
     Plot_C2 = (PlotDataX)';
     
-    fig(jj) = pcolor(Plot_X, Plot_Y, Plot_C2(:,1:end));
+    heatmapHandle(jj) = pcolor(ax, Plot_X, Plot_Y, Plot_C2(:,1:end));
     axis equal tight
     
     switch p.Colormap
@@ -122,10 +123,9 @@ for jj = 1:Data_L
     
     xticklabels('');
     yticklabels('');
-    box off
-    set(gca,'Color','none')
-    axis off
-    set(fig, 'EdgeColor', p.EdgeColor);
+
+    set(ax,'XColor','none','YColor','none','color','none')
+    set(heatmapHandle(jj), 'EdgeColor', p.EdgeColor,'Tag','Heatmap');
     
     hold on
     
